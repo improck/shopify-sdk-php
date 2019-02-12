@@ -138,7 +138,7 @@ class Shopify
      */
     public function post(string $resourceUrl, array $postParam):Collection
     {
-        $response = $this->client->post("/admin/$resourceUrl", $postParam);
+        $response = $this->client->post("/admin/$resourceUrl", ["form_params" => $postParam]);
 
         $collection = $this->convertJsonToCollect($response->getBody()->getContents());
 
@@ -156,7 +156,7 @@ class Shopify
      */
     public function put(string $resourceUrl, array $postParam):Collection
     {
-        $response = $this->client->put("/admin/$resourceUrl", $postParam);
+        $response = $this->client->put("/admin/$resourceUrl", ["form_params" => $postParam]);
 
         $collection = $this->convertJsonToCollect($response->getBody()->getContents());
 
