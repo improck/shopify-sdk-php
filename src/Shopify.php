@@ -219,7 +219,7 @@ class Shopify
 
         $resourceKey = key($jsonDecoded);
 
-        $collection = collect($jsonDecoded[$resourceKey]);
+        $collection = new Collection($jsonDecoded[$resourceKey]);
 
         return $collection;
 
