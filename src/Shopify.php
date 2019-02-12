@@ -106,7 +106,7 @@ class Shopify
 
         $response = $this->client->get("/admin/$resourceUrl");
 
-        $collection = $this->makeContentToCollection($response->getBody()->getContents());
+        $collection = $this->convertJsonToCollect($response->getBody()->getContents());
 
         return $collection;
 
@@ -140,7 +140,7 @@ class Shopify
     {
         $response = $this->client->post("/admin/$resourceUrl", $postParam);
 
-        $collection = $this->makeContentToCollection($response->getBody()->getContents());
+        $collection = $this->convertJsonToCollect($response->getBody()->getContents());
 
         return $collection;
     }
@@ -158,7 +158,7 @@ class Shopify
     {
         $response = $this->client->put("/admin/$resourceUrl", $postParam);
 
-        $collection = $this->makeContentToCollection($response->getBody()->getContents());
+        $collection = $this->convertJsonToCollect($response->getBody()->getContents());
 
         return $collection;
     }
@@ -181,7 +181,7 @@ class Shopify
 
 
     /**
-     * Get all resources
+     * Get all resources from all pages
      *
      * @param string $resourceUrl
      * @return Collection
@@ -202,7 +202,9 @@ class Shopify
 
         }
 
-        return collect($collections)->collapse();
+        $allCollections = new Collection($collections);
+
+        return $allCollections->collapse();
 
     }
 
@@ -212,7 +214,7 @@ class Shopify
      * @param string $content
      * @return Collection
      */
-    private function makeContentToCollection(string $content):Collection
+    private function convertJsonToCollect(string $content):Collection
     {
 
         $jsonDecoded = json_decode($content, true);
