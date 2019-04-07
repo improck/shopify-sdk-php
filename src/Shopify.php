@@ -198,7 +198,11 @@ class Shopify
 
         for ($i = 1; $i <= $pageCount; $i++) {
 
-            $collections[] = $this->get($resourceUrl . "?page=$i&limit=250");
+            if(strpos($resourceUrl, '?')) {
+                $collections[] = $this->get($resourceUrl . "&page=$i&limit=250");
+            }else {
+                $collections[] = $this->get($resourceUrl . "?page=$i&limit=250");
+            }
 
         }
 
